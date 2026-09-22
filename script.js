@@ -40,6 +40,8 @@ window.addEventListener("resize", () => {
 if (year) year.textContent = new Date().getFullYear();
 
 document.addEventListener("click", (event) => {
+  if (!(event.target instanceof Element)) return;
+
   const analyticsTarget = event.target.closest("[data-analytics-event]");
 
   if (!analyticsTarget || typeof window.gtag !== "function") return;
