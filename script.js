@@ -38,3 +38,22 @@ window.addEventListener("resize", () => {
 });
 
 if (year) year.textContent = new Date().getFullYear();
+
+document.addEventListener("click", (event) => {
+  const analyticsTarget = event.target.closest("[data-analytics-event]");
+
+  if (!analyticsTarget || typeof window.gtag !== "function") return;
+
+  const eventName = analyticsTarget.dataset.analyticsEvent;
+  const eventParams = {
+    link_text: analyticsTarget.textContent.trim().replace(/\s+/g, " "),
+    link_url: analyticsTarget.href || analyticsTarget.getAttribute("href"),
+    link_location: analyticsTarget.dataset.analyticsLocation,
+  };
+
+  if (analyticsTarget.dataset.analyticsPlatform) {
+    eventParams.social_platform = analyticsTarget.dataset.analyticsPlatform;
+  }
+
+  window.gtag("event", eventName, eventParams);
+});
