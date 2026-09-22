@@ -320,18 +320,20 @@ address[id] {
 }
 
 .connection-map {
+  --map-top: 70px;
+  --map-height: 210px;
   position: relative;
   width: 100%;
   min-width: 0;
-  min-height: 270px;
+  height: 320px;
   margin-top: 68px;
 }
 
 .connection-map svg {
   position: absolute;
-  inset: 16px 0 0;
+  inset: var(--map-top) 0 auto;
   width: 100%;
-  height: 210px;
+  height: var(--map-height);
   overflow: visible;
 }
 
@@ -346,32 +348,24 @@ address[id] {
 
 .map-path-active {
   stroke: var(--cyan);
-  stroke-dasharray: 0.72 1;
   stroke-linecap: round;
-}
-
-.connection-map circle {
-  fill: var(--navy-950);
-  stroke: var(--blue);
-  stroke-width: 3;
 }
 
 .map-label {
   position: absolute;
   z-index: 2;
   display: grid;
-  grid-template-columns: auto 1fr;
-  column-gap: 10px;
+  grid-template-columns: 1fr;
 }
 
 .map-label-start {
-  bottom: 0;
-  left: 0;
+  top: calc(var(--map-top) + var(--map-height) * 221 / 280 + 20px);
+  left: calc(100% * 16 / 620);
 }
 
 .map-label-end {
-  top: 0;
-  right: 0;
+  bottom: calc(100% - var(--map-top) - var(--map-height) * 58 / 280 + 20px);
+  right: calc(100% * 16 / 620);
   text-align: right;
 }
 
@@ -381,32 +375,59 @@ address[id] {
 }
 
 .map-label small {
-  grid-column: 2;
-  color: var(--muted);
+  grid-column: 1;
+  color: #8498ad;
 }
 
 .map-dot {
+  position: absolute;
   width: 9px;
   height: 9px;
-  margin-top: 7px;
   border-radius: 50%;
   background: var(--cyan);
 }
 
+.map-label-start .map-dot {
+  top: -20px;
+  left: 0;
+  transform: translate(-50%, -50%);
+}
+
+.map-label-end .map-dot {
+  bottom: -20px;
+  right: 0;
+  transform: translate(50%, 50%);
+}
+
 .map-station {
   position: absolute;
+  transform: translateX(-50%);
+  padding-top: 20px;
   color: #8498ad;
   font-size: 0.72rem;
 }
 
+.map-station::before {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  transform: translate(-50%, -50%);
+  border: 3px solid var(--blue);
+  border-radius: 50%;
+  background: var(--navy-950);
+  content: "";
+}
+
 .station-one {
-  top: 25px;
-  left: 35%;
+  top: calc(var(--map-top) + var(--map-height) * 58 / 280);
+  left: calc(100% * 240 / 620);
 }
 
 .station-two {
-  top: 54%;
-  left: 66%;
+  top: calc(var(--map-top) + var(--map-height) * 138 / 280);
+  left: calc(100% * 472 / 620);
 }
 
 .hero-rule {
@@ -495,47 +516,8 @@ address[id] {
 }
 
 .about-grid {
-  display: grid;
-  gap: 62px;
+  max-width: 780px;
 }
-
-.about-mark {
-  position: relative;
-  min-height: 220px;
-}
-
-.about-line {
-  position: absolute;
-  top: 50%;
-  right: -20px;
-  left: -20px;
-  height: 1px;
-  background: #34506d;
-  transform: rotate(-9deg);
-}
-
-.about-line::before {
-  position: absolute;
-  top: -1px;
-  left: 16%;
-  width: 49%;
-  height: 3px;
-  background: var(--cyan);
-  content: "";
-}
-
-.about-node {
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  border: 3px solid var(--navy-900);
-  border-radius: 50%;
-  background: var(--blue);
-}
-
-.node-a { top: 58%; left: 14%; }
-.node-b { top: 45%; left: 52%; background: var(--cyan); }
-.node-c { top: 28%; right: 10%; }
 
 .about-copy .section-index {
   color: var(--cyan);
@@ -756,6 +738,23 @@ address[id] {
   text-align: right;
 }
 
+.contact-channel {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.contact-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .site-footer {
   padding-block: 48px 28px;
   background: var(--navy-950);
@@ -905,14 +904,10 @@ address[id] {
   }
 
   .connection-map {
+    --map-height: 240px;
     align-self: center;
-    min-height: 390px;
-    margin-top: 50px;
-  }
-
-  .connection-map svg {
-    top: 46px;
-    height: 280px;
+    height: 350px;
+    margin-top: 0;
   }
 
   .section {
@@ -959,16 +954,6 @@ address[id] {
 
   .service-featured .service-number {
     color: var(--blue);
-  }
-
-  .about-grid {
-    grid-template-columns: minmax(300px, 0.72fr) minmax(500px, 1.28fr);
-    gap: 100px;
-    align-items: center;
-  }
-
-  .about-mark {
-    min-height: 420px;
   }
 
   .process-intro {
